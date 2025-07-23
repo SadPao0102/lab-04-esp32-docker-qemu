@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  esp32-dev:
+    build: .
+    container_name: esp32-development
+    volumes:
+      - ./src:/project/src
+      - ./build:/project/build
+      - ./components:/project/components
+      - ./hello_world:/project/hello_world
+    working_dir: /project
+    stdin_open: true
+    tty: true
+    privileged: true
+    devices:
+      - /dev:/dev
+    environment:
+      - IDF_PATH=/opt/esp/idf
+    networks:
+      - esp32-network
+
+networks:
+  esp32-network:
+    driver: bridge

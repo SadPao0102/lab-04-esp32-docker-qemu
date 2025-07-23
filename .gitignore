@@ -48,6 +48,83 @@
 .tmp_versions/
 modules.order
 Module.symvers
+
+# ESP32 specific
+build/
+dist/
+*.bin
+*.elf
+*.map
+sdkconfig
+sdkconfig.old
+sdkconfig.defaults.*
+sdkconfig.*.old
+
+# ESP-IDF build artifacts
+build/
+dependencies.lock
+managed_components/
+main/idf_component.yml.lock
+
+# Flash and debugging
+*.flash_args
+*.monitor_args
+*.partition_table/
+flasher_args.json
+
+# Component files
+components/*/build/
+components/*/dist/
+
+# Bootloader
+bootloader/
+partition_table/
+
+# Factory app binary
+factory_app.bin
+
+# Size analysis
+size.json
+
+# Test framework
+test_apps/*/build/
+
+# Unit test files
+test/
+TEST_LOGS/
+
+# Coverage files
+*.gcno
+*.gcda
+*.gcov
+htmlcov/
+coverage.xml
+
+# Memory info
+memory_info.txt
+flash_project_args
+project_description.json
+
+# IDF Monitor
+idf_monitor.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
 Mkfile.old
 dkms.conf
 
