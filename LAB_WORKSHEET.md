@@ -20,7 +20,7 @@ docker --version
 docker-compose --version
 ```
 
-**ผลลัพธ์ที่คาดหวัง:**
+**ตัวอย่างผลลัพธ์:**
 ```
 Docker version 24.x.x, build xxxxxxx
 Docker Compose version v2.x.x
@@ -88,6 +88,71 @@ CMD ["bash"]
 
 **การทดสอบ:** ตรวจสอบว่าไฟล์ Dockerfile ถูกสร้างขึ้นและมีเนื้อหาถูกต้อง
 
+**วิธีการตรวจสอบ:**
+
+1. **ตรวจสอบการมีอยู่ของไฟล์:**
+```bash
+# Windows
+dir Dockerfile
+# หรือ
+ls Dockerfile
+
+# ตรวจสอบขนาดไฟล์ (ควรมีขนาดมากกว่า 0 bytes)
+dir Dockerfile
+```
+
+2. **ตรวจสอบเนื้อหาไฟล์:**
+```bash
+# แสดงเนื้อหาทั้งหมด
+type Dockerfile        # Windows
+# หรือ
+cat Dockerfile         # Linux/Mac
+
+# แสดงบรรทัดแรกๆ เพื่อตรวจสอบ
+head -10 Dockerfile    # Linux/Mac
+# หรือ
+more Dockerfile        # Windows
+```
+
+3. **ตรวจสอบ syntax ของ Dockerfile:**
+```bash
+# ใช้ Docker เพื่อตรวจสอบ syntax
+docker build --no-cache --dry-run .
+
+# หรือตรวจสอบ configuration
+docker-compose config
+```
+
+4. **จุดสำคัญที่ต้องตรวจสอบ:**
+   - บรรทัดแรกต้องเป็น `FROM espressif/idf:v5.1`
+   - มี RUN commands สำหรับติดตั้ง packages
+   - มี QEMU installation
+   - มี WORKDIR `/project`
+   - มี environment variables (IDF_PATH, PATH)
+   - มี CMD `["bash"]`
+
+5. **ตรวจสอบการ encoding ของไฟล์:**
+```bash
+# ตรวจสอบว่าไฟล์เป็น UTF-8 และไม่มี BOM
+file Dockerfile        # Linux/Mac
+# ควรแสดง: ASCII text หรือ UTF-8 Unicode text
+```
+
+**ตัวอย่างผลลัพธ์ที่ถูกต้อง:**
+```
+PS C:\path\to\project> dir Dockerfile
+Mode         LastWriteTime         Length Name
+----         -------------         ------ ----
+-a----       7/24/2025  10:30 AM   1234   Dockerfile
+
+PS C:\path\to\project> type Dockerfile
+FROM espressif/idf:v5.1
+
+# Install additional tools
+RUN apt-get update && apt-get install -y \
+...
+```
+
 ### ขั้นตอนที่ 4: สร้าง docker-compose.yml
 สร้างไฟล์ `docker-compose.yml` โดยมีเนื้อหาดังต่อไปนี้
 
@@ -119,6 +184,76 @@ networks:
 ```
 
 **การทดสอบ:** ตรวจสอบไฟล์ด้วยคำสั่ง `docker-compose config` เพื่อยืนยันว่า syntax ถูกต้อง
+
+**วิธีการตรวจสอบ docker-compose.yml:**
+
+1. **ตรวจสอบการมีอยู่และขนาดไฟล์:**
+```bash
+# Windows
+dir docker-compose.yml
+# หรือ
+ls -la docker-compose.yml
+```
+
+2. **ตรวจสอบเนื้อหาไฟล์:**
+```bash
+# แสดงเนื้อหาไฟล์
+type docker-compose.yml    # Windows
+# หรือ
+cat docker-compose.yml     # Linux/Mac
+```
+
+3. **ตรวจสอบ syntax และ configuration:**
+```bash
+# ตรวจสอบ YAML syntax และแสดง configuration ที่จะใช้
+docker-compose config
+
+# ตรวจสอบเฉพาะ services
+docker-compose config --services
+
+# ตรวจสอบ volumes
+docker-compose config --volumes
+```
+
+4. **จุดสำคัญที่ต้องตรวจสอบ:**
+   - `version: '3.8'` อยู่บรรทัดแรก
+   - มี service `esp32-dev`
+   - มี `build: .` (ใช้ Dockerfile ในโฟลเดอร์เดียวกัน)
+   - มี volumes mapping ที่ถูกต้อง
+   - มี `tty: true` และ `stdin_open: true`
+   - มี network configuration
+
+**ตัวอย่างผลลัพธ์ที่ถูกต้อง:**
+```bash
+PS C:\path\to\project> docker-compose config
+services:
+  esp32-dev:
+    build:
+      context: C:\path\to\project
+      dockerfile: Dockerfile
+    container_name: esp32-development
+    environment:
+      IDF_PATH: /opt/esp/idf
+    networks:
+      esp32-network: null
+    privileged: true
+    stdin_open: true
+    tty: true
+    volumes:
+    - C:\path\to\project\src:/project/src:rw
+    - C:\path\to\project\build:/project/build:rw
+    - C:\path\to\project\components:/project/components:rw
+    working_dir: /project
+networks:
+  esp32-network:
+    driver: bridge
+version: '3.8'
+```
+
+**หากพบข้อผิดพลาด:**
+- **YAML Syntax Error:** ตรวจสอบ indentation (ใช้ spaces ไม่ใช่ tabs)
+- **File not found:** ตรวจสอบว่าอยู่ในโฟลเดอร์ที่ถูกต้อง
+- **Invalid version:** ตรวจสอบ Docker Compose version
 
 ### ขั้นตอนที่ 5: Build Docker Image
 ```bash
