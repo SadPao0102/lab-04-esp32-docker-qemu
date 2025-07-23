@@ -120,11 +120,117 @@ Thumbs.db
 
 # Docker
 .docker/
+docker-compose.override.yml
+.dockerignore
+*.log
+.env.local
+.env.*.local
 
-# Python
+# Docker volumes
+volumes/
+data/
+
+# Container logs
+logs/
+*.log.*
+
+# Development environment
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+!.vscode/extensions.json
+
+# JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# VS Code specific
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Temporary files
+tmp/
+temp/
+.tmp
+.temp
+
+# Backup files
+*.bak
+*.backup
+*.swp
+*.swo
+*~
+
+# Archive files
+*.tar
+*.tar.gz
+*.zip
+*.rar
+
+# QEMU specific
+qemu_simulation/
+*.qcow2
+*.img
+*.vmdk
+
+# Simulation logs
+simulation_logs/
+qemu.log
+qemu_*.log
+
+# GDB files
+.gdb_history
+*.gdb
+peda-session-*.txt
+
+# Embedded development
+*.hex
+*.s19
+*.srec
+*.mot
+
+# Cross-compilation
+cross-build/
+toolchain/
+sysroot/
+
+# Lab submission files (keep structure, ignore content)
+submissions/*/screenshots/*.png
+submissions/*/screenshots/*.jpg
+submissions/*/video_demo.mp4
+submissions/*/report.pdf
+!submissions/example-submission/
+!submissions/README.md
+
+# Python bytecode
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+
+# Python virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Node.js (if using any web interfaces)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Additional system files
 Mkfile.old
 dkms.conf
 

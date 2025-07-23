@@ -80,6 +80,7 @@ docker-compose down
 
 ### 🔧 เอกสารเทคนิค
 - **[DOCKER_COMMANDS_GUIDE.md](DOCKER_COMMANDS_GUIDE.md)** - คำแนะนำ Docker commands โดยละเอียด
+- **[GITIGNORE_GUIDE.md](GITIGNORE_GUIDE.md)** - คำแนะนำการจัดการ Git ignore สำหรับ ESP32
 - **[GRADING_RUBRIC.md](GRADING_RUBRIC.md)** - เกณฑ์การให้คะแนน
 
 ### 📝 การส่งงาน
