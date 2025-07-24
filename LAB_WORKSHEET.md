@@ -495,8 +495,24 @@ Go to the project directory and run:
 
 ```bash
 cd /project
-idf.py create-project hello_world
+idf.py create-project -p hello_world hello_world
 cd hello_world
+```
+**หมายเหตุ: คำสั่งและพารามิเตอร์ในการสร้าง project**
+
+คำสั่งในการสร้าง project
+```
+idf.py create-project  
+```
+
+กำหนดที่อยู่ให้ project
+```
+-p hello_world  
+```
+
+กำหนดชื่อ project
+```
+hello_world
 ```
 
 **การทดสอบ:** ตรวจสอบว่าโฟลเดอร์โปรเจ็กต์ถูกสร้างขึ้น:
