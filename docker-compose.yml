@@ -8,7 +8,6 @@ services:
       - ./src:/project/src
       - ./build:/project/build
       - ./components:/project/components
-      - ./hello_world:/project/hello_world
     working_dir: /project
     stdin_open: true
     tty: true
