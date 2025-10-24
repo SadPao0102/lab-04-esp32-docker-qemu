@@ -308,13 +308,211 @@ docker-compose exec esp32-dev idf.py --version
 root@container-id:/project#
 ```
 
+#### ทดสอบการรันคำสั่ง
+
+**การทดสอบ:**  ตรวจสอบว่าสามารถเรียกใช้คำสั่ง idf.py ได้หรือไม่ โดยพิวพ์คำสั่งต่อไปนี้
+
+```
+idf.py
+```
+**ผลลัพธ์ที่คาดหวัง:** ต้องปรากฏข้อความลักษณะนี้บน terminal
+``` bash
+/opt/esp/idf/tools/check_python_dependencies.py:12: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+  import pkg_resources
+Usage: idf.py [OPTIONS] COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]...
+
+  ESP-IDF CLI build management tool. For commands that are not known to       
+  idf.py an attempt to execute it as a build system target will be made.      
+  Selected target: None
+
+Options:
+  --version                       Show IDF version and exit.
+  --list-targets                  Print list of supported targets and exit.   
+  -C, --project-dir PATH          Project directory.
+  -B, --build-dir PATH            Build directory.
+  -w, --cmake-warn-uninitialized / -n, --no-warnings
+                                  Enable CMake uninitialized variable
+                                  warnings for CMake files inside the
+                                  project directory. (--no-warnings is now    
+                                  the default, and doesn't need to be
+                                  specified.) The default value can be set    
+                                  with the IDF_CMAKE_WARN_UNINITIALIZED       
+                                  environment variable.
+  -v, --verbose                   Verbose build output.
+  --preview                       Enable IDF features that are still in       
+                                  preview.
+  --ccache / --no-ccache          Use ccache in build. Disabled by default.   
+                                  The default value can be set with the       
+                                  IDF_CCACHE_ENABLE environment variable.     
+  -G, --generator [Ninja|Unix Makefiles]
+                                  CMake generator.
+  --no-hints                      Disable hints on how to resolve errors and  
+                                  logging.
+  -D, --define-cache-entry TEXT   Create a cmake cache entry. This option     
+                                  can be used at most once either globally,   
+                                  or for one subcommand.
+  -p, --port TEXT                 Serial port. The default value can be set   
+                                  with the ESPPORT environment variable.      
+                                  This option can be used at most once        
+                                  either globally, or for one subcommand.     
+  -b, --baud INTEGER              Baud rate for flashing. It can imply        
+                                  monitor baud rate as well if it hasn't      
+                                  been defined locally. The default value     
+                                  can be set with the ESPBAUD environment     
+                                  variable. This option can be used at most   
+                                  once either globally, or for one
+                                  subcommand.
+  --help                          Show this message and exit.
+
+Commands:
+  add-dependency               Add dependency to the manifest file.
+  all                          Aliases: build. Build the project.
+  app                          Build only the app.
+  app-flash                    Flash the app only.
+  bootloader                   Build only bootloader.
+  bootloader-flash             Flash bootloader only.
+  build-system-targets         Print list of build system targets.
+  clean                        Delete build output files from the build       
+                               directory.
+  confserver                   Run JSON configuration server.
+  coredump-debug               Create core dump ELF file and run GDB debug    
+                               session with this file.
+  coredump-info                Print crashed task’s registers, callstack,     
+                               list of available tasks in the system, memory  
+                               regions and contents of memory stored in core  
+                               dump (TCBs and stacks)
+  create-component             Create a new component.
+  create-manifest              Create manifest for specified component.       
+  create-project               Create a new project.
+  create-project-from-example  Create a project from an example.
+  delete-version               (Deprecated) Deprecated! New CLI command:      
+                               "compote component delete". Delete specified
+                               version of the component from the component    
+                               registry.
+  docs                         Open web browser with documentation for ESP-   
+                               IDF
+  efuse-common-table           Generate C-source for IDF's eFuse fields.      
+  efuse-custom-table           Generate C-source for user's eFuse fields.     
+  encrypted-app-flash          Flash the encrypted app only.
+  encrypted-flash              Flash the encrypted project.
+  erase-flash                  Erase entire flash chip.
+  erase-otadata                Erase otadata partition.
+  flash                        Flash the project.
+  fullclean                    Delete the entire build directory contents.    
+  gdb                          Run the GDB.
+  gdbgui                       GDB UI in default browser.
+  gdbtui                       GDB TUI mode.
+  menuconfig                   Run "menuconfig" project configuration tool.   
+  monitor                      Display serial output.
+  openocd                      Run openocd from current path
+  pack-component               (Deprecated) Deprecated! New CLI command:      
+                               "compote component pack". Create component     
+                               archive and store it in the dist directory.    
+  partition-table              Build only partition table.
+  partition-table-flash        Flash partition table only.
+  post-debug                   Utility target to read the output of async     
+                               debug action and stop them.
+  python-clean                 Delete generated Python byte code from the     
+                               IDF directory
+  read-otadata                 Read otadata partition.
+  reconfigure                  Re-run CMake.
+  save-defconfig               Generate a sdkconfig.defaults with options     
+                               different from the default ones
+  set-target                   Set the chip target to build.
+  show-efuse-table             Print eFuse table.
+  size                         Print basic size information about the app.    
+  size-components              Print per-component size information.
+  size-files                   Print per-source-file size information.        
+  uf2                          Generate the UF2 binary with all the binaries  
+                               included
+  uf2-app                      Generate an UF2 binary for the application     
+                               only
+  update-dependencies          Update dependencies of the project
+  upload-component             (Deprecated) Deprecated! New CLI command:      
+                               "compote component upload". Upload component   
+                               to the component registry. If the component    
+                               doesn't exist in the registry it will be       
+                               created automatically.
+  upload-component-status      (Deprecated) Deprecated! New CLI command:      
+                               "compote component upload-status". Check the   
+                               component uploading status by the job ID.   
+```
+
+
+**การแก้ไขข้อผิดพลาด:**   ถ้าปรากฏข้อความในลักษณะต่อไปนี้ แสดงว่าระบบยังไม่รู้จักสภาพแวดล้อมของ idf
+```
+Please use idf.py only in an ESP-IDF shell environment.
+```
+
+ให้รันคำสั่งต่อไปนี้
+
+``` bash
+ . $IDF_PATH/export.sh
+```
+
+บน terminal ควรจะปรากฏข้อความในลักษณะต่อไปนี้
+
+```bash
+Detecting the Python interpreter
+Checking "python3" ...
+Python 3.8.10
+"python3" has been detected
+Checking Python compatibility
+Checking other ESP-IDF version.
+Using a supported version of tool cmake found in PATH: 3.16.3.
+However the recommended version is 3.24.0.
+Adding ESP-IDF tools to PATH...
+Using a supported version of tool cmake found in PATH: 3.16.3.
+However the recommended version is 3.24.0.
+Checking if Python packages are up to date...
+Requirement files:
+ - /opt/esp/idf/tools/requirements/requirements.core.txt
+Python being checked: /opt/esp/python_env/idf5.1_py3.8_env/bin/python
+/opt/esp/idf/tools/check_python_dependencies.py:12: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+  import pkg_resources
+Python requirements are satisfied.
+Added the following directories to PATH:
+  /opt/esp/idf/components/espcoredump
+  /opt/esp/idf/components/partition_table
+  /opt/esp/idf/components/app_update
+  /opt/esp/tools/xtensa-esp-elf-gdb/12.1_20221002/xtensa-esp-elf-gdb/bin      
+  /opt/esp/tools/riscv32-esp-elf-gdb/12.1_20221002/riscv32-esp-elf-gdb/bin    
+  /opt/esp/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin    
+  /opt/esp/tools/xtensa-esp32s2-elf/esp-12.2.0_20230208/xtensa-esp32s2-elf/bin
+  /opt/esp/tools/xtensa-esp32s3-elf/esp-12.2.0_20230208/xtensa-esp32s3-elf/bin
+  /opt/esp/tools/riscv32-esp-elf/esp-12.2.0_20230208/riscv32-esp-elf/bin      
+  /opt/esp/tools/esp32ulp-elf/2.35_20220830/esp32ulp-elf/bin
+  /opt/esp/tools/openocd-esp32/v0.12.0-esp32-20230419/openocd-esp32/bin       
+  /opt/esp/python_env/idf5.1_py3.8_env/bin
+Done! You can now compile ESP-IDF projects.
+Go to the project directory and run:
+
+  idf.py build
+```
+
 ### ขั้นตอนที่ 7: สร้างโปรเจ็กต์ ESP32 ตัวอย่าง
 ภายใน container ให้รันคำสั่ง:
 
 ```bash
 cd /project
-idf.py create-project hello_world
+idf.py create-project -p hello_world hello_world
 cd hello_world
+```
+**หมายเหตุ: คำสั่งและพารามิเตอร์ในการสร้าง project**
+
+คำสั่งในการสร้าง project
+```
+idf.py create-project  
+```
+
+กำหนดที่อยู่ให้ project
+```
+-p hello_world  
+```
+
+กำหนดชื่อ project
+```
+hello_world
 ```
 
 **การทดสอบ:** ตรวจสอบว่าโฟลเดอร์โปรเจ็กต์ถูกสร้างขึ้น:
